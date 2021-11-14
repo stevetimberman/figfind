@@ -4,15 +4,16 @@ version = "0.1.0"
 description = ""
 authors = ["steventimberman <stevetimberman@gmail.com>"]
 readme = "README.md"
+repository = "https://github.com/steventimberman/figfind"
 packages = [{include = "figfind"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-cement = "^3.0.4"
 Jinja2 = "^3.0.3"
 PyYAML = "^6.0"
 colorlog = "^6.6.0"
 commitizen = "^2.20.0"
+click = "^8.0.3"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -26,6 +27,8 @@ isort = "^5.10.1"
 flake8 = "^4.0.1"
 blacken-docs = "^1.11.0"
 
+[tool.poetry.scripts]
+figfind = 'figfind.cli:run'
 
 [build-system]
 requires = ["poetry-core"]
