@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "figfind"
+version = "0.1.0"
+description = ""
+authors = ["steventimberman <stevetimberman@gmail.com>"]
+readme = "README.md"
+packages = [{include = "figfind"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+cement = "^3.0.4"
+Jinja2 = "^3.0.3"
+PyYAML = "^6.0"
+colorlog = "^6.6.0"
+commitizen = "^2.20.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^6.2.5"
+black = "21.9-beta.0"
+pre-commit = "2.15.0"
+pytest-cov = "^3.0.0"
+coverage = "^6.1.2"
+mypy = "^0.910"
+isort = "^5.10.1"
+flake8 = "^4.0.1"
+blacken-docs = "^1.11.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+line_length = 88
+skip_gitignore = true
