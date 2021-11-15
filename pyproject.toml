@@ -43,3 +43,8 @@ line-length = 88
 profile = "black"
 line_length = 88
 skip_gitignore = true
+
+[mypy]
+python_version = "3.10"
+files= "figfind"
+ignore_missing_imports = true

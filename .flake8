@@ -1,7 +1,3 @@
-[mypy]
-files=figfind
-ignore_missing_imports=true
-
 [flake8]
 ignore = E203, E266, F403, E501, W503
 max-line-length = 88
