@@ -26,6 +26,8 @@ mypy = "^0.910"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
 blacken-docs = "^1.11.0"
+pytest-mock = "^3.6.1"
+
 
 [tool.poetry.scripts]
 figfind = 'figfind.cli:run'

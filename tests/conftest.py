@@ -1,17 +1,13 @@
 """
 PyTest Fixtures.
 """
+import pytest
 
-# import pytest
+import figfind.filesystem  # noqa: F401
 
-# from cement import fs
 
-# @pytest.fixture(scope="function")
-# def tmp(request):
-#     """
-#     Create a `tmp` object that geneates a unique temporary directory, and file
-#     for each test function that requires it.
-#     """
-#     t = fs.Tmp()
-#     yield t
-#     t.remove()
+@pytest.fixture(scope="function")
+def mock_os(mocker):
+    """Mock builtin os calls in figfind.file_system."""
+    mock_os = mocker.patch("figfind.filesystem.os")
+    yield mock_os
