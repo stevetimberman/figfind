@@ -36,3 +36,8 @@ The following demonstrates setting up and working with a development environment
 
 $ make test
 ```
+
+## TODO
+
+Create module/class called PathWrapper that standardizes the string paths input to functions.
+Does things like expand the path to (like `figfile._expand_path()`).

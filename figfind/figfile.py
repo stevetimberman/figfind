@@ -18,7 +18,7 @@ class FigFile:
     VALID_FILE_SYSTEMS = ["posix"]  # Options are posix, nt and java
     FILE_NAME = "figfile.yml"
 
-    def __init__(self):
+    def __init__(self, preload=True):
         xdg_config_path = _expand_path(os.environ.get("XDG_CONFIG_HOME", "~/.config"))
 
         if os.name not in self.VALID_FILE_SYSTEMS:
@@ -28,22 +28,42 @@ class FigFile:
 
         self.path = xdg_config_path / self.FILE_NAME
 
-        self._data = self._read_data()
+        self._loaded = False
+        self._local_data = dict()
 
-    def add_config(self, app_name: str, config_path: str) -> bool:
+        if preload:
+            self._load_data()
+
+    def _load_data(self, overwrite=False):
+        if overwrite or not self._loaded:
+            self._local_data = self._read_data()
+            self._loaded = True
+
+    def add_app_config(self, app_name: str, config_path: str, write_to_file: bool = True) -> None:
         """Adds a new config path for a specific app."""
-        # See if the app already has a config path
-        # if so, append this as a new config
-        # otherwise create new app secton with a list containing the config path
-        pass
+        self._load_data()
 
-    def contain(self, app_name: str) -> bool:
+        if self._contains_app(app_name):
+            self._local_data[app_name] = []
+
+        if not self._contains_path_for_app(config_path):
+            expanded_config_path = _expand_path(config_path)
+            self._local_data[app_name].append(expanded_config_path)
+
+            if write_to_file:
+                self._write_data(self._local_data)
+
+    def _contains_app(self, app_name: str) -> bool:
         """Checks if the figfile has an entry for a specific app."""
-        pass
+        self._load_data()
+        return True if app_name in self._local_data else False
 
-    def contains_config(self, app_name: str, config_path: str) -> bool:
+    def _contains_path_for_app(self, app_name: str, config_path: str) -> bool:
         """Checks if the figfile contains a specific config path for an app."""
-        pass
+        self._load_data()
+        app_paths = self._local_data.get(app_name, [])
+        expanded_config_path = _expand_path(config_path)
+        return True if config_path in app_paths else False
 
     def exists(self) -> bool:
         """Checks if a figfile exists in the file system."""
@@ -65,7 +85,11 @@ class FigFile:
         return True
 
     def _read_data(self) -> dict[str, list[str]] | None:
-        """Read YAML data from the figfile."""
+        """Read YAML data from the figfile.
+
+        Reads data from figfile.yml, a dictionary where names of apps
+        are mapped to a list of config files.
+        """
         if not self.exists():
             return {}
 
