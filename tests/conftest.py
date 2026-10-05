@@ -1,6 +1,7 @@
 """
 PyTest Fixtures.
 """
+
 import pytest
 
 import figfind.filesystem  # noqa: F401
